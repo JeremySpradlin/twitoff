@@ -35,8 +35,4 @@ def create_app():
         return render_template('base.html', title='Users Updated',
                                users=User.query.all())
 
-    @app.route('user/JeremySpradlin')
-    def click_on_me():
-
-
     return app
