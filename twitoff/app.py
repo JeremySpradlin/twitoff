@@ -5,7 +5,7 @@ Main app/routing file for TwitOff
 
 # IMPORTS
 from flask import Flask, render_template
-from models import DB, User, insert_example_users, insert_example_tweets
+from models import DB, User, Tweet, insert_example_users, insert_example_tweets
 
 
 def create_app():
@@ -23,7 +23,7 @@ def create_app():
     @app.route('/')
     def root():
         return render_template('base.html', title='Home',
-                               users=User.query.all())
+                               users=User.query.all(), tweets=Tweet.query.all())
 
     @app.route('/update')
     def update():
@@ -33,6 +33,11 @@ def create_app():
         insert_example_users()
         insert_example_tweets()
         return render_template('base.html', title='Users Updated',
-                               users=User.query.all())
+                               users=User.query.all(), tweets=Tweet.query.all())
+
+    @app.route('/user/<int:user_id>')
+    def displayUser(user_id):
+        user = User.query.all()
+        return render_template('user.html', title='User', user=user)
 
     return app

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+{% if user %}
+
+{% for user in user %}
+    <div class="alert alert-success" role="alert">
+        <strong>{{user}}</strong>
+    </div>
+{% endfor %}
+
+{% endif %}
+</body>
+</html>
