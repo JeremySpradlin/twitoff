@@ -5,7 +5,8 @@ Main app/routing file for TwitOff
 
 # IMPORTS
 from flask import Flask, render_template
-from models import DB, User, Tweet, insert_example_users, insert_example_tweets
+from models import DB, User, Tweet
+from twitter import insert_example_users
 
 
 def create_app():
@@ -27,13 +28,20 @@ def create_app():
 
     @app.route('/update')
     def update():
-        # Reset the database
-        DB.drop_all()
-        DB.create_all()
+        # Insert example users
+        print('before method')
         insert_example_users()
-        insert_example_tweets()
+        print('after method')
+        # insert_example_tweets() #Commented out old functionality
         return render_template('base.html', title='Users Updated',
                                users=User.query.all(), tweets=Tweet.query.all())
+
+    @app.route('/reset')
+    def reset():
+        DB.drop_all()
+        DB.create_all()
+        return render_template('base.html', title='Reset Database!',
+                               users=User.query.all())
 
     @app.route('/user/<int:user_id>')
     def displayUser(user_id):
