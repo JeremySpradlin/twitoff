@@ -37,7 +37,14 @@ def create_app():
 
     @app.route('/user/<int:user_id>')
     def displayUser(user_id):
-        user = User.query.all()
+        user = User.query.filter_by(id=user_id)
+        return render_template('user.html', title='User', user=user)
+
+    @app.route('/user/<user_name>')
+    def displayUserName(user_name):
+        user = User.query.filter_by(name=user_name)
+        #tweets = Tweet.query.filter_by(user=user)
+        #return render_template('user.html', title='User', user=user, tweets=tweets)
         return render_template('user.html', title='User', user=user)
 
     return app
